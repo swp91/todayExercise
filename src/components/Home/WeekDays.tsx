@@ -1,0 +1,65 @@
+import { isLoggedInState } from "../../recoil/User";
+import { useRecoilValue } from "recoil";
+import Instructions from "./Instructions";
+import ExerciseRecord from "./ExerciseRecord";
+import { formatDay, isToday, getStartOfWeek } from "./DateUtils";
+import { recordsState } from "../../recoil/ExerciseRecords";
+
+const WeekDays = () => {
+  const today = new Date();
+  const startOfWeek = getStartOfWeek(today);
+  const days = [];
+
+  const isLoggedIn = useRecoilValue(isLoggedInState);
+  const records = useRecoilValue(recordsState);
+
+  // const [records, setRecords] = useState([]);
+
+  // useEffect(() => {  //
+  //   fetchExerciseRecords().then(data => {
+  //     setRecords(data);
+  //   });
+  // }, []);
+
+  for (let i = 0; i < 7; i++) {
+    const day = new Date(startOfWeek);
+    day.setDate(day.getDate() + i);
+    days.push(day);
+  }
+
+  return (
+    <>
+      <div className="mx-2 grid grid-cols-7 gap-4">
+        {isLoggedIn ? (
+          <ExerciseRecord records={records} days={days} />
+        ) : (
+          <div className="col-span-7">
+            <Instructions />
+          </div>
+        )}
+      </div>
+      <div className="mx-2 grid grid-cols-7 gap-4 mt-4">
+        {days.map((day, index) => (
+          <div
+            key={index}
+            className="text-center flex items-center justify-center"
+          >
+            <div
+              className={`${
+                isToday(day, new Date())
+                  ? "text-white bg-maincolor"
+                  : "text-black bg-itemgray"
+              } w-12 h-20 flex flex-col justify-center items-center rounded-3xl text-lg`}
+            >
+              {formatDay(day).map((part, index) => (
+                <span key={index}>{part}</span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
+  );
+};
+
+export default WeekDays;
