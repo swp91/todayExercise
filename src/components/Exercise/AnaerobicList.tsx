@@ -18,12 +18,12 @@ const AnaerobicList = () => {
             <div className="flex">
               <div className="bg-maincolor rounded-tl-3xl rounded-bl-3xl">
                 <p className="py-1 px-10 mr-2 text-lg text-white">
-                  {item.exerciseCategory}({item.specificExercise})
+                  {item.part}({item.exName}) - {item.kg}kg
                 </p>
               </div>
               <div className="border border-maincolor rounded-br-3xl rounded-tr-3xl">
                 <p className="py-1 px-10 mr-2 text-lg text-maincolor">
-                  {item.reps}회 x {item.sets}세트
+                  {item.rep}회 x {item.set}세트
                 </p>
               </div>
             </div>

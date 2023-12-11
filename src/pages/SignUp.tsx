@@ -1,7 +1,7 @@
 import React from "react";
 import InputField, { SignUpFormData } from "../components/common/InputField";
 import { useForm } from "react-hook-form";
-import { signUp, emailCheck } from "../api/User";
+import { signUp, emailCheck } from "../api/UserApi";
 
 const SignUp: React.FC = () => {
   const {

@@ -51,3 +51,14 @@ export const signIn = async (email: string, password: string) => {
     throw error;
   }
 };
+
+//로그아웃
+export const logOut = async () => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/user/logout`);
+    return response;
+  } catch (error) {
+    console.error("로그아웃 에러", error);
+    throw error;
+  }
+};

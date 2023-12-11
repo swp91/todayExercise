@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 const NavigationBar = () => {
@@ -11,7 +10,7 @@ const NavigationBar = () => {
         <Link to="/ex" className="flex-1 flex justify-center items-center">
           <img src="/img/gym.svg" alt="" className="cursor-pointer" />
         </Link>
-        <Link to="/" className="flex-1 flex justify-center items-center">
+        <Link to="/my" className="flex-1 flex justify-center items-center">
           <img src="/img/mypage.svg" alt="" className="cursor-pointer" />
         </Link>
       </div>

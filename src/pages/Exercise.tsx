@@ -1,12 +1,23 @@
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { exerciseTabState, timerState } from "../recoil/Exercise";
 import AerobicExercise from "../components/Exercise/AerobicExercise";
 import AnaerobicExercise from "../components/Exercise/AnaerobicExercise";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { isLoggedInState } from "../recoil/User";
+import { useEffect } from "react";
 
 const Exercise = () => {
   const [activeTab, setActiveTab] = useRecoilState(exerciseTabState);
   const [isTimerOn] = useRecoilState(timerState);
+  const navigate = useNavigate();
+  const LoginCheck = useRecoilValue(isLoggedInState);
+
+  useEffect(() => {
+    if (!LoginCheck) {
+      navigate("/login");
+    }
+  }, []);
 
   const changeTab = (tabName: string) => {
     if (!isTimerOn) {

@@ -5,11 +5,14 @@ import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
 import Exercise from "../pages/Exercise";
 import Mypage from "../pages/Mypage";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Router = () => {
   return (
     <BrowserRouter>
       <Layout>
+        <ToastContainer />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<SignIn />} />

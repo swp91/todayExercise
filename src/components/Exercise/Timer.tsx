@@ -8,8 +8,9 @@ import {
   timerState,
 } from "../../recoil/Exercise";
 import TimerModal from "./TimerModal";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
+import { aerobicRecord, anaerobicRecord } from "../../api/ExerciseApi";
+
 const Timer = () => {
   const [timer, setTimer] = useRecoilState(timerState);
   const [isTimerOn, setIsTimerOn] = useState(false);
@@ -60,11 +61,19 @@ const Timer = () => {
   };
 
   const handleModalConfirm = async () => {
-    // 데이터 전송 로직에 따라 수정
-    // const currentList = activeTab === "aerobic" ? aerobicList : anaerobicList;
-    // 데이터 전송 로직...
+    let response;
 
-    // 타이머와 운동 리스트 초기화
+    try {
+      if (activeTab === "aerobic") {
+        response = await aerobicRecord(timer.toString(), aerobicList);
+      } else {
+        response = await anaerobicRecord(timer.toString(), anaerobicList);
+      }
+      console.log(response);
+    } catch (error) {
+      console.error("API 호출 중 오류 발생:", error);
+    }
+
     setTimer(0);
     if (activeTab === "aerobic") {
       setAerobicList([]);
@@ -87,7 +96,6 @@ const Timer = () => {
 
   return (
     <div>
-      <ToastContainer position="top-center" autoClose={5000} />
       <div
         className={`m-auto w-72 h-28 text-white flex items-center justify-center rounded-[40px] mt-8 cursor-pointer ${
           isTimerOn || isModalOpen ? "bg-timered" : "bg-maincolor"

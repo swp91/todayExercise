@@ -7,6 +7,9 @@ const AerobicList = () => {
   const handleDeleteExercise = (index: number) => {
     setExercisesList(exercisesList.filter((_, idx) => idx !== index));
   };
+
+  console.log(exercisesList);
+
   return (
     <>
       <div className="mx-8 mt-6 h-[450px] overflow-y-scroll hide-scrollbar">
@@ -15,12 +18,12 @@ const AerobicList = () => {
             <div className="flex">
               <div className="bg-maincolor rounded-tl-3xl rounded-bl-3xl">
                 <p className="py-1 px-10 mr-2 text-lg text-white">
-                  {item.exercise}
+                  {item.exName}
                 </p>
               </div>
               <div className="border border-maincolor rounded-br-3xl rounded-tr-3xl">
                 <p className="py-1 px-10 mr-2 text-lg text-maincolor">
-                  {item.amount}분
+                  {item.km}km
                 </p>
               </div>
             </div>

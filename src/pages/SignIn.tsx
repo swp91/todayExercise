@@ -1,7 +1,11 @@
 import React from "react";
 import InputField from "../components/common/InputField";
 import { useForm } from "react-hook-form";
-import { signIn } from "../api/User";
+import { signIn } from "../api/UserApi";
+import { useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
+import { isLoggedInState } from "../recoil/User";
+import { toast } from "react-toastify";
 
 export interface LoginFormdata {
   username: string;
@@ -15,13 +19,31 @@ const SignIn: React.FC = () => {
     formState: { errors },
   } = useForm<LoginFormdata>();
 
-  const onSubmit = (data: LoginFormdata) => {
-    console.log(data);
+  const navigate = useNavigate();
+  const setIsLoggedIn = useSetRecoilState(isLoggedInState);
+
+  const onSubmit = async (data: LoginFormdata) => {
     try {
-      const response = signIn(data.username, data.password);
-      console.log("로그인 성공:", response);
+      const response = await signIn(data.username, data.password);
+
+      if (response.message === "Success") {
+        toast.success("로그인 성공: " + response.data, {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000,
+        });
+        setIsLoggedIn(true);
+        navigate("/");
+      } else {
+        toast.error("로그인 실패: " + response.message, {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000,
+        });
+      }
     } catch (error) {
-      console.error("로그인 실패:", error);
+      toast.error("로그인 처리 중 오류 발생: " + error, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
     }
   };
 
