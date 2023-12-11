@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { isLoggedInState } from "../recoil/User";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 export interface LoginFormdata {
   username: string;
@@ -91,7 +92,9 @@ const SignIn: React.FC = () => {
           로그인
         </button>
       </form>
-      <div className="mt-7 cursor-pointer">회원가입</div>
+      <Link className="mt-7 cursor-pointer" to="/join">
+        회원가입
+      </Link>
     </div>
   );
 };
