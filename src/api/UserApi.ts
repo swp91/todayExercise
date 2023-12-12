@@ -29,7 +29,7 @@ export const emailCheck = async (email: string) => {
     );
     return response;
   } catch (error) {
-    console.error("회원가입 에러:", error);
+    console.error("아이디 중복체크 에러:", error);
     throw error;
   }
 };
@@ -38,7 +38,7 @@ export const emailCheck = async (email: string) => {
 export const signIn = async (email: string, password: string) => {
   try {
     const response = await axios.post(
-      `${API_BASE_URL}/user/login`,
+      `api/user/login`,
       {
         email,
         password,
@@ -47,7 +47,7 @@ export const signIn = async (email: string, password: string) => {
     );
     return response.data;
   } catch (error) {
-    console.error("회원가입 에러:", error);
+    console.error("로그인 에러:", error);
     throw error;
   }
 };
