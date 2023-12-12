@@ -38,7 +38,7 @@ export const emailCheck = async (email: string) => {
 export const signIn = async (email: string, password: string) => {
   try {
     const response = await axios.post(
-      `api/user/login`,
+      `/api/user/login`,
       {
         email,
         password,
