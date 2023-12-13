@@ -29,7 +29,7 @@ export const emailCheck = async (email: string) => {
     );
     return response;
   } catch (error) {
-    console.error("아이디 중복체크 에러:", error);
+    console.error("아이디중복체크 에러:", error);
     throw error;
   }
 };

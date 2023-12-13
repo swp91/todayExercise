@@ -1,5 +1,5 @@
-import ExerciseHistoryList from "../components/Mypage/ExerciseHistoryList";
-import InfoSection from "../components/Mypage/InfoSection";
+import ExerciseHistoryList from "../components/mypage/ExerciseHistoryList";
+import InfoSection from "../components/mypage/InfoSection";
 
 const Mypage = () => {
   return (
