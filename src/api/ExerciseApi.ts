@@ -10,10 +10,16 @@ export const aerobicRecord = async (
   cardioEx: AerobicItem[]
 ) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/workout/cardioEx`, {
-      workTime,
-      cardioEx,
-    });
+    const response = await axios.post(
+      `${API_BASE_URL}/workout/cardioEx`,
+      {
+        workTime,
+        cardioEx,
+      },
+      {
+        withCredentials: true,
+      }
+    );
     return response;
   } catch (error) {
     console.error("운동저장 실패", error);
@@ -27,10 +33,16 @@ export const anaerobicRecord = async (
   strengthEx: AnaerobicItem[]
 ) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/workout`, {
-      workTime,
-      strengthEx,
-    });
+    const response = await axios.post(
+      `${API_BASE_URL}/workout`,
+      {
+        workTime,
+        strengthEx,
+      },
+      {
+        withCredentials: true,
+      }
+    );
     return response;
   } catch (error) {
     console.error("운동저장 실패", error);
