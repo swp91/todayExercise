@@ -68,3 +68,20 @@ export const logOut = async () => {
     throw error;
   }
 };
+
+//홈페이지 접속확인
+export const Check = async () => {
+  try {
+    const response = await axios.post(
+      `${API_BASE_URL}/workout/check`,
+      {},
+      {
+        withCredentials: true,
+      }
+    );
+    return response;
+  } catch (error) {
+    console.error("체크 에러", error);
+    throw error;
+  }
+};

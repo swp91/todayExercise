@@ -2,6 +2,8 @@ import { useRecoilValue } from "recoil";
 import { recordsState } from "../../recoil/ExerciseRecords";
 import { formatDateISO } from "./DateUtils";
 import TodayRecordbox from "./TodayRecordbox";
+import { useEffect } from "react";
+import { Check } from "../../api/UserApi";
 
 const TodayExercise = () => {
   const records = useRecoilValue(recordsState);
@@ -9,6 +11,19 @@ const TodayExercise = () => {
   const todayISO = formatDateISO(today);
   const todayRecord =
     records.find((record) => record.date === todayISO) ?? null;
+
+  const UserCheck = async () => {
+    try {
+      const response = await Check();
+      console.log("체크 확인", response);
+    } catch (error) {
+      console.error("체크 에러", error);
+    }
+  };
+
+  useEffect(() => {
+    UserCheck();
+  }, []);
 
   return (
     <div className="flex mt-10 items-center justify-center gap-12">
