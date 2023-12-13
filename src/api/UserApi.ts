@@ -72,13 +72,7 @@ export const logOut = async () => {
 //홈페이지 접속확인
 export const Check = async () => {
   try {
-    const response = await axios.post(
-      `${API_BASE_URL}/workout/check`,
-      {},
-      {
-        withCredentials: true,
-      }
-    );
+    const response = await axios.post(`${API_BASE_URL}/workout/check`);
     return response;
   } catch (error) {
     console.error("체크 에러", error);
