@@ -1,6 +1,6 @@
-import GoExerciseBtn from "../components/home/GoExerciseBtn";
-import TodayExercise from "../components/home/TodayExercise";
-import WeekDays from "../components/home/WeekDays";
+import GoExerciseBtn from "../components/Home/GoExerciseBtn";
+import TodayExercise from "../components/Home/TodayExercise";
+import WeekDays from "../components/Home/WeekDays";
 
 const Home = () => {
   return (
