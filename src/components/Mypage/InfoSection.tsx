@@ -35,7 +35,10 @@ const InfoSection = () => {
               alt=""
             />
           </div>
-          <div className="ml-5 text-3xl font-bold">닉네임</div>
+          <div className="flex gap-3">
+            <div className="ml-5 text-2xl font-bold">닉네임</div>
+            <img src="/img/modify.svg" alt="" className="cursor-pointer" />
+          </div>
         </div>
         <div className="w-36 h-14 bg-maincolor text-white text-2xl rounded-3xl flex items-center justify-center mr-4 cursor-pointer">
           정보수정
