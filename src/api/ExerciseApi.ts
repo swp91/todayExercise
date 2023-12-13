@@ -53,13 +53,13 @@ export const anaerobicRecord = async (
 //모든 운동 기록 조회
 export const exericiseallRecord = async () => {
   try {
-    const response = await axios.get(
-      `${API_BASE_URL}/workout/all?cursor=0&pageSize=7`,
-
-      {
-        withCredentials: true,
-      }
-    );
+    const response = await axios.get(`${API_BASE_URL}/workout/all`, {
+      params: {
+        cursor: 0,
+        pageSize: 7,
+      },
+      withCredentials: true,
+    });
     return response;
   } catch (error) {
     console.error("기록조회 실패", error);
