@@ -34,7 +34,7 @@ export const anaerobicRecord = async (
 ) => {
   try {
     const response = await axios.post(
-      `${API_BASE_URL}/workout`,
+      `${API_BASE_URL}/workout/strengthEx`,
       {
         workTime,
         strengthEx,
