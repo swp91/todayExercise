@@ -1,4 +1,3 @@
-import React from "react";
 import { useRecoilValue } from "recoil";
 import { weekrecordsState } from "../../recoil/ExerciseRecords";
 import { formatDateISO } from "./DateUtils";
