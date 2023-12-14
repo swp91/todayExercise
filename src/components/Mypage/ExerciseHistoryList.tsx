@@ -22,7 +22,7 @@ const ExerciseHistoryList = () => {
     try {
       const response = await exericiseallRecord(cursor); // cursor를 사용하여 데이터 로드
       console.log(response.data, "확인");
-      const newData = response.data;
+      const newData = response.data.data;
 
       setAllData((prevData) => [...prevData, ...newData]); // 기존 데이터에 새 데이터 추가
 
