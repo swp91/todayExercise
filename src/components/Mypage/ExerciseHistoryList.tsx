@@ -14,11 +14,14 @@ const ExerciseHistoryList = () => {
   const [cursor, setCursor] = useState(0);
   const [hasMore, setHasMore] = useState(true);
 
+  console.log(allData);
+
   const loadData = async () => {
     if (!hasMore) return; // 더 이상 로드할 데이터가 없으면 함수 종료
 
     try {
       const response = await exericiseallRecord(cursor); // cursor를 사용하여 데이터 로드
+      console.log(response.data);
       const newData = response.data;
 
       setAllData((prevData) => [...prevData, ...newData]); // 기존 데이터에 새 데이터 추가
