@@ -40,6 +40,7 @@ const InputField: React.FC<InputFieldProps> = ({
         />
         {onCheck && (
           <button
+            type="button"
             onClick={onCheck}
             className="ml-4 w-28 h-10 rounded-[20px] text-white bg-[#687280]"
           >

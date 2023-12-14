@@ -1,11 +1,13 @@
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { logOut } from "../../api/UserApi";
 import { useEffect } from "react";
 import { isLoggedInState } from "../../recoil/User";
 import { useNavigate } from "react-router-dom";
+import { nicknameModal } from "../../recoil/Mypages";
 
 const InfoSection = () => {
   const [loggedIn, setLoggedIn] = useRecoilState(isLoggedInState);
+  const setNickModal = useSetRecoilState(nicknameModal);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,6 +27,10 @@ const InfoSection = () => {
     }
   };
 
+  const isOpen = () => {
+    setNickModal(true);
+  };
+
   return (
     <div>
       <div className="flex items-center justify-between pt-10 mb-4">
@@ -38,7 +44,12 @@ const InfoSection = () => {
           </div>
           <div className="flex gap-3">
             <div className="ml-5 text-2xl font-bold">닉네임</div>
-            <img src="/img/modify.svg" alt="" className="cursor-pointer" />
+            <img
+              src="/img/modify.svg"
+              alt=""
+              className="cursor-pointer"
+              onClick={isOpen}
+            />
           </div>
         </div>
         <div className="px-2 py-1 bg-maincolor text-white text-lg rounded-xl flex items-center justify-center mr-4 cursor-pointer">

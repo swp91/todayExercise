@@ -34,6 +34,19 @@ export const emailCheck = async (email: string) => {
   }
 };
 
+//닉네임 중복체크
+export const nickNameCheck = async (nickName: string) => {
+  try {
+    const response = await axios.post(
+      `${API_BASE_URL}/user/check/nickname/${nickName}`
+    );
+    return response;
+  } catch (error) {
+    console.error("닉네임중복체크 에러:", error);
+    throw error;
+  }
+};
+
 //로그인
 export const signIn = async (email: string, password: string) => {
   try {

@@ -1,16 +1,16 @@
 // 주어진 초를 시간, 분, 초로 변환하는 함수
 export function formatDuration(seconds: number): string {
   if (seconds === 0) {
-    return "0초";
+    return "0";
   }
 
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.floor((seconds % 3600) / 60);
   const remainingSeconds = seconds % 60;
 
-  return `${hours > 0 ? `${hours}시간 ` : ""}${
-    minutes > 0 ? `${minutes}분 ` : ""
-  }${remainingSeconds > 0 ? `${remainingSeconds}초` : ""}`;
+  return `${hours > 0 ? `${hours}h ` : ""}${minutes > 0 ? `${minutes}m ` : ""}${
+    remainingSeconds > 0 ? `${remainingSeconds}s` : ""
+  }`;
 }
 
 // Date 객체를 ISO 형식의 날짜 문자열(YYYY-MM-DD)로 변환하는 함수

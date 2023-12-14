@@ -6,7 +6,7 @@ import {
   moreExercisedata,
 } from "../../recoil/Exercise";
 import { exericiseallRecord } from "../../api/ExerciseApi";
-import { ExerciseRecord, ProcessedData } from "./ExerciseType";
+import { ExerciseRecord, ProcessedData } from "./MypageType";
 
 const ExerciseHistoryList = () => {
   const [allData, setAllData] =
@@ -111,7 +111,7 @@ const ExerciseHistoryList = () => {
     <div className="pb-20">
       <div className="mt-8 border-t-4 pt-10 pb-20">
         {latestDataPerDate.map((data) => (
-          <div key={data.date} className="mb-8">
+          <div key={data.date} className="mb-8 z-0">
             <h3 className="font-bold text-xl mb-3 ">{data.date}</h3>
             {data.timeGroups.map((group, groupIndex) => (
               <div

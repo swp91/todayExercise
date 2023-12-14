@@ -1,7 +1,7 @@
 import { atom } from "recoil";
 import { AerobicItem } from "../components/Exercise/AerobicExercise";
 import { AnaerobicItem } from "../components/Exercise/AnaerobicExercise";
-import { ExerciseRecord } from "../components/Mypage/ExerciseType";
+import { ExerciseRecord } from "../components/Mypage/MypageType";
 
 //유산소, 무산소 탭전환
 export const exerciseTabState = atom({
