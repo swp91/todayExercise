@@ -51,11 +51,11 @@ export const anaerobicRecord = async (
 };
 
 //모든 운동 기록 조회
-export const exericiseallRecord = async () => {
+export const exericiseallRecord = async (cursor: number) => {
   try {
     const response = await axios.get(`${API_BASE_URL}/workout/all`, {
       params: {
-        cursor: 0,
+        cursor,
         pageSize: 7,
       },
       withCredentials: true,

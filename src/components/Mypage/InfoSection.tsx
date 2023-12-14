@@ -40,8 +40,8 @@ const InfoSection = () => {
             <img src="/img/modify.svg" alt="" className="cursor-pointer" />
           </div>
         </div>
-        <div className="w-36 h-14 bg-maincolor text-white text-2xl rounded-3xl flex items-center justify-center mr-4 cursor-pointer">
-          정보수정
+        <div className="px-2 py-1 bg-maincolor text-white text-lg rounded-xl flex items-center justify-center mr-4 cursor-pointer">
+          비밀번호 변경
         </div>
       </div>
       <div className="flex justify-end ">
