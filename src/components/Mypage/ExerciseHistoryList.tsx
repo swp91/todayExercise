@@ -3,7 +3,6 @@ import { useRecoilState } from "recoil";
 import { exerciseAllData } from "../../recoil/Exercise";
 import { exericiseallRecord } from "../../api/ExerciseApi";
 import { ExerciseRecord, ProcessedData } from "./ExerciseType";
-import InfiniteScroll from "react-infinite-scroll-component";
 
 const ExerciseHistoryList = () => {
   const [allData, setAllData] =
@@ -106,12 +105,7 @@ const ExerciseHistoryList = () => {
   }, [allData]);
 
   return (
-    <InfiniteScroll
-      dataLength={latestDataPerDate.length}
-      next={loadData}
-      hasMore={hasMore}
-      loader={<h4>로딩중</h4>}
-    >
+    <>
       <div className="mt-8 border-t-4 pt-10 pb-20">
         {latestDataPerDate.map((data) => (
           <div key={data.date} className="mb-8">
@@ -149,7 +143,12 @@ const ExerciseHistoryList = () => {
           </div>
         ))}
       </div>
-    </InfiniteScroll>
+      {hasMore && (
+        <button onClick={loadData} className="load-more-button">
+          더 보기
+        </button>
+      )}
+    </>
   );
 };
 
