@@ -1,43 +1,40 @@
+import React from "react";
 import { useRecoilValue } from "recoil";
-import { recordsState } from "../../recoil/ExerciseRecords";
+import { weekrecordsState } from "../../recoil/ExerciseRecords";
 import { formatDateISO } from "./DateUtils";
 import TodayRecordbox from "./TodayRecordbox";
-import { useEffect } from "react";
-import { Check } from "../../api/UserApi";
 
 const TodayExercise = () => {
-  const records = useRecoilValue(recordsState);
-  const today = new Date();
-  const todayISO = formatDateISO(today);
-  const todayRecord =
-    records.find((record) => record.date === todayISO) ?? null;
+  const records = useRecoilValue(weekrecordsState);
+  const todayISO = formatDateISO(new Date());
 
-  const UserCheck = async () => {
-    try {
-      const response = await Check();
-      console.log("체크 확인", response);
-    } catch (error) {
-      console.error("체크 에러", error);
-    }
-  };
-
-  useEffect(() => {
-    UserCheck();
-  }, []);
+  // 오늘 날짜에 해당하는 기록 찾기 및 합산
+  const todayRecord = records.reduce(
+    (acc, record) => {
+      if (record.created_At.startsWith(todayISO)) {
+        acc.cardio += record.cardioExTime ? parseInt(record.cardioExTime) : 0;
+        acc.strength += record.strengthExTime
+          ? parseInt(record.strengthExTime)
+          : 0;
+      }
+      return acc;
+    },
+    { cardio: 0, strength: 0 }
+  );
 
   return (
     <div className="flex mt-10 items-center justify-center gap-12">
       <div className="font-bold text-maincolor text-4xl">TODAY</div>
       <TodayRecordbox
         record={todayRecord}
-        type="aerobic"
+        type="cardio"
         imageSrc="/img/aerobic.svg"
         altText="유산소"
         title="유산소"
       />
       <TodayRecordbox
         record={todayRecord}
-        type="anaerobic"
+        type="strength"
         imageSrc="/img/anaerobic.svg"
         altText="무산소"
         title="무산소"

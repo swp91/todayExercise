@@ -1,27 +1,23 @@
 import React from "react";
 import { formatTodayDuration } from "./DateUtils";
 
-interface ExerciseRecordProps {
-  record: ExerciseRecord | null;
-  type: "aerobic" | "anaerobic";
+interface TodayRecordboxProps {
+  record: { cardio: number; strength: number };
+  type: "cardio" | "strength";
   imageSrc: string;
   altText: string;
   title: string;
 }
 
-interface ExerciseRecord {
-  date: string;
-  aerobic: number | null;
-  anaerobic: number | null;
-}
-
-const TodayRecordbox: React.FC<ExerciseRecordProps> = ({
+const TodayRecordbox: React.FC<TodayRecordboxProps> = ({
   record,
   type,
   imageSrc,
   altText,
   title,
 }) => {
+  const duration = type === "cardio" ? record.cardio : record.strength;
+
   return (
     <div className="w-40 h-28 border-maincolor border rounded-3xl">
       <div className="flex items-center ml-4 mt-2">
@@ -29,9 +25,7 @@ const TodayRecordbox: React.FC<ExerciseRecordProps> = ({
         <span className="text-2xl font-bold text-maincolor ml-1">{title}</span>
       </div>
       <div className="text-xl text-center mt-5">
-        {record && record[type] !== null && record[type] !== undefined
-          ? formatTodayDuration(record[type] as number)
-          : "0"}
+        {formatTodayDuration(duration)}
       </div>
     </div>
   );

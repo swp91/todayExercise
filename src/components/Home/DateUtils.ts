@@ -1,13 +1,16 @@
-// 주어진 분을 시간과 분으로 변환하는 함수.
-export function formatDuration(minutes: number): null | string {
-  if (minutes === 0) {
-    return null; // 0분인 경우 표시하지 않음
+// 주어진 초를 시간, 분, 초로 변환하는 함수
+export function formatDuration(seconds: number): string {
+  if (seconds === 0) {
+    return "0초";
   }
-  const hours = Math.floor(minutes / 60);
-  const remainingMinutes = minutes % 60;
-  return `${hours > 0 ? `${hours}h` : ""}${
-    remainingMinutes > 0 ? `${remainingMinutes}m` : ""
-  } `;
+
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const remainingSeconds = seconds % 60;
+
+  return `${hours > 0 ? `${hours}시간 ` : ""}${
+    minutes > 0 ? `${minutes}분 ` : ""
+  }${remainingSeconds > 0 ? `${remainingSeconds}초` : ""}`;
 }
 
 // Date 객체를 ISO 형식의 날짜 문자열(YYYY-MM-DD)로 변환하는 함수
@@ -42,13 +45,42 @@ export function isToday(day: Date, today: Date): boolean {
 }
 
 //오늘의 운동
-export function formatTodayDuration(minutes: number): string {
-  if (minutes === 0) {
-    return "0분";
+export function formatTodayDuration(seconds: number): string {
+  if (seconds === 0) {
+    return "0";
   }
-  const hours = Math.floor(minutes / 60);
-  const remainingMinutes = minutes % 60;
-  return `${hours > 0 ? `${hours}h` : ""}${
-    remainingMinutes > 0 ? `${remainingMinutes}m` : ""
-  } `;
+
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const remainingSeconds = seconds % 60;
+
+  return `${hours > 0 ? `${hours}h ` : ""}${minutes > 0 ? `${minutes}m ` : ""}${
+    remainingSeconds > 0 ? `${remainingSeconds}s` : ""
+  }`;
 }
+
+export interface RecordType {
+  created_At: string;
+  cardioExTime: string | null;
+  strengthExTime: string | null;
+}
+
+// 기록을 날짜별로 그룹화하는 함수
+export const groupByDate = (records: RecordType[]) => {
+  return records.reduce(
+    (acc: { [key: string]: { cardio: number; strength: number } }, record) => {
+      const date = record.created_At.split("T")[0]; // 날짜 추출
+      if (!acc[date]) {
+        acc[date] = { cardio: 0, strength: 0 };
+      }
+      if (record.cardioExTime) {
+        acc[date].cardio += parseInt(record.cardioExTime);
+      }
+      if (record.strengthExTime) {
+        acc[date].strength += parseInt(record.strengthExTime);
+      }
+      return acc;
+    },
+    {}
+  );
+};

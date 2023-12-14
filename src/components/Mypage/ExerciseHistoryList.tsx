@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { exerciseAllData } from "../../recoil/Exercise";
+import {
+  exerciseAllData,
+  exercisedatacursor,
+  moreExercisedata,
+} from "../../recoil/Exercise";
 import { exericiseallRecord } from "../../api/ExerciseApi";
 import { ExerciseRecord, ProcessedData } from "./ExerciseType";
 
@@ -10,25 +14,22 @@ const ExerciseHistoryList = () => {
   const [latestDataPerDate, setLatestDataPerDate] = useState<ProcessedData[]>(
     []
   );
-  const [cursor, setCursor] = useState(0);
-  const [hasMore, setHasMore] = useState(true);
-
-  console.log(allData, "올데이타");
+  const [cursor, setCursor] = useRecoilState(exercisedatacursor);
+  const [hasMore, setHasMore] = useRecoilState(moreExercisedata);
 
   const loadData = async () => {
-    if (!hasMore) return; // 더 이상 로드할 데이터가 없으면 함수 종료
+    if (!hasMore) return;
 
     try {
-      const response = await exericiseallRecord(cursor); // cursor를 사용하여 데이터 로드
-      console.log(response.data, "확인");
+      const response = await exericiseallRecord(cursor);
       const newData = response.data.data;
 
-      setAllData((prevData) => [...prevData, ...newData]); // 기존 데이터에 새 데이터 추가
+      setAllData((prevData) => [...prevData, ...newData]);
 
       if (newData.length === 0 || !newData[newData.length - 1].remainingData) {
-        setHasMore(false); // 더 이상 로드할 데이터가 없으면 hasMore를 false로 설정
+        setHasMore(false);
       } else {
-        setCursor(newData[newData.length - 1].workoutId); // 다음 로드를 위해 cursor 업데이트
+        setCursor(newData[newData.length - 1].workoutId);
       }
     } catch (error) {
       console.error(error);
@@ -36,7 +37,9 @@ const ExerciseHistoryList = () => {
   };
 
   useEffect(() => {
-    loadData(); // 컴포넌트 마운트 시 첫 데이터 로드
+    if (allData.length === 0) {
+      loadData();
+    }
   }, []);
 
   const formatTime = (seconds: number) => {
@@ -105,7 +108,7 @@ const ExerciseHistoryList = () => {
   }, [allData]);
 
   return (
-    <>
+    <div className="pb-20">
       <div className="mt-8 border-t-4 pt-10 pb-20">
         {latestDataPerDate.map((data) => (
           <div key={data.date} className="mb-8">
@@ -144,11 +147,16 @@ const ExerciseHistoryList = () => {
         ))}
       </div>
       {hasMore && (
-        <button onClick={loadData} className="load-more-button">
-          더 보기
-        </button>
+        <div
+          onClick={loadData}
+          className="load-more-button flex items-center justify-center"
+        >
+          <button className="bg-maincolor cursor-pointer text-white text-lg py-1 px-4 rounded-lg">
+            더 보기
+          </button>
+        </div>
       )}
-    </>
+    </div>
   );
 };
 

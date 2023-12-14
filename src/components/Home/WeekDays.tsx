@@ -1,9 +1,11 @@
 import { isLoggedInState } from "../../recoil/User";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import Instructions from "./Instructions";
 import ExerciseRecord from "./ExerciseRecord";
 import { formatDay, isToday, getStartOfWeek } from "./DateUtils";
-import { recordsState } from "../../recoil/ExerciseRecords";
+import { weekrecordsState } from "../../recoil/ExerciseRecords";
+import { exericiseWeekRecord } from "../../api/ExerciseApi";
+import { useEffect } from "react";
 
 const WeekDays = () => {
   const today = new Date();
@@ -11,15 +13,21 @@ const WeekDays = () => {
   const days = [];
 
   const isLoggedIn = useRecoilValue(isLoggedInState);
-  const records = useRecoilValue(recordsState);
+  const [records, setRecords] = useRecoilState(weekrecordsState);
 
-  // const [records, setRecords] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await exericiseWeekRecord(); // await 추가
+        console.log(response.data.data);
+        setRecords(response.data.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-  // useEffect(() => {  //
-  //   fetchExerciseRecords().then(data => {
-  //     setRecords(data);
-  //   });
-  // }, []);
+    fetchData();
+  }, []);
 
   for (let i = 0; i < 7; i++) {
     const day = new Date(startOfWeek);

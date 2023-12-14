@@ -19,6 +19,7 @@ const InfoSection = () => {
       const response = await logOut();
       console.log(response);
       setLoggedIn(false);
+      navigate("/");
     } catch (error) {
       console.error(error);
     }
