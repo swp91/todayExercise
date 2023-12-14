@@ -1,14 +1,16 @@
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { logOut } from "../../api/UserApi";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { isLoggedInState } from "../../recoil/User";
 import { useNavigate } from "react-router-dom";
 import { nicknameModal } from "../../recoil/Mypages";
+import { profileImageChange } from "../../api/MypageApi";
 
 const InfoSection = () => {
   const [loggedIn, setLoggedIn] = useRecoilState(isLoggedInState);
   const setNickModal = useSetRecoilState(nicknameModal);
   const navigate = useNavigate();
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     if (!loggedIn) {
@@ -31,15 +33,39 @@ const InfoSection = () => {
     setNickModal(true);
   };
 
+  const handleImageChange = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append("imageFile", file);
+
+      try {
+        await profileImageChange(formData);
+        console.log("성공");
+      } catch (error) {
+        console.log("실패");
+      }
+    }
+  };
+
   return (
     <div>
       <div className="flex items-center justify-between pt-10 mb-4">
         <div className="flex items-center">
           <div>
+            <input
+              type="file"
+              style={{ display: "none" }}
+              ref={fileInputRef}
+              onChange={handleImageChange}
+            />
             <img
-              className="w-24 h-24 rounded-[50%]"
+              className="w-24 h-24 rounded-[50%] cursor-pointer"
               src="/img/mysample.jpg"
               alt=""
+              onClick={() =>
+                fileInputRef.current && fileInputRef.current.click()
+              }
             />
           </div>
           <div className="flex gap-3">
