@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import InputField from "../components/common/InputField";
 import { useForm } from "react-hook-form";
 import { signIn } from "../api/UserApi";
 import { useNavigate } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { isLoggedInState } from "../recoil/User";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
@@ -21,7 +21,13 @@ const SignIn: React.FC = () => {
   } = useForm<LoginFormdata>();
 
   const navigate = useNavigate();
-  const setIsLoggedIn = useSetRecoilState(isLoggedInState);
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/");
+    }
+  }, [isLoggedIn]);
 
   const onSubmit = async (data: LoginFormdata) => {
     try {
