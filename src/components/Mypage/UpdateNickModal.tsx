@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { useForm } from "react-hook-form";
-import { nicknameModal } from "../../recoil/Mypages";
+import { nicknameModal, profileInfo } from "../../recoil/Mypages";
 import InputField from "../common/InputField";
 import { nickNameCheck } from "../../api/UserApi";
 import { toast } from "react-toastify";
-import { nickNameChange } from "../../api/MypageApi";
+import { myprofileInfo, nickNameChange } from "../../api/MypageApi";
 
 const UpdateNicknameModal = () => {
   const [Modal, setModal] = useRecoilState(nicknameModal);
@@ -17,6 +17,16 @@ const UpdateNicknameModal = () => {
   const [isNicknameAvailable, setIsNicknameAvailable] = useState(true);
   const [isNicknameChecked, setIsNicknameChecked] = useState(false);
   const [lastCheckedNickname, setLastCheckedNickname] = useState("");
+  const setMyInfo = useSetRecoilState(profileInfo);
+
+  const profileData = async () => {
+    try {
+      const response = await myprofileInfo();
+      setMyInfo(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     document.body.style.overflow = Modal ? "hidden" : "unset";
@@ -73,6 +83,7 @@ const UpdateNicknameModal = () => {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 2000,
         });
+        profileData();
         setModal(false);
       } catch (error) {
         console.error(error);
@@ -130,7 +141,7 @@ const UpdateNicknameModal = () => {
               변경하기
             </div>
             <div
-              className="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400"
+              className="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400 cursor-pointer"
               onClick={closeModal}
             >
               취소

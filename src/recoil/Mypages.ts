@@ -6,10 +6,15 @@ export const nicknameModal = atom({
   default: false,
 });
 
+export interface UserProfile {
+  profileImage: string;
+  nickName: string;
+}
+
 //마이페이지 내 정보
-export const profileInfo = atom({
+export const profileInfo = atom<UserProfile | null>({
   key: "profileInfo",
-  default: [],
+  default: null,
 });
 
 //비밀번호변경 페이지 진입
