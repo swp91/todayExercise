@@ -1,21 +1,24 @@
 import React from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 
-export interface SignUpFormData {
+export interface FormData {
   username: string;
   nickname: string;
   password: string;
   confirmPassword: string;
+  currentPassword?: string;
+  newPassword?: string;
 }
 
 interface InputFieldProps {
   label: string;
-  name: keyof SignUpFormData;
+  name: keyof FormData;
   register: UseFormRegisterReturn;
   type?: string;
   onCheck?: () => void;
   placeholder?: string;
   className?: string;
+  maxLength?: number;
 }
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -26,6 +29,7 @@ const InputField: React.FC<InputFieldProps> = ({
   onCheck,
   placeholder,
   className,
+  maxLength,
 }) => {
   return (
     <div className="flex flex-col">
@@ -37,6 +41,7 @@ const InputField: React.FC<InputFieldProps> = ({
           type={type}
           placeholder={placeholder}
           className={`${className} flex-1 w-full h-10 border rounded-[20px] border-itemgray p-4 placeholder09`}
+          maxLength={maxLength}
         />
         {onCheck && (
           <button

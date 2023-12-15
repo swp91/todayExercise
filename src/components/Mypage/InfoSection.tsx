@@ -3,20 +3,37 @@ import { logOut } from "../../api/UserApi";
 import { useEffect, useRef } from "react";
 import { isLoggedInState } from "../../recoil/User";
 import { useNavigate } from "react-router-dom";
-import { nicknameModal } from "../../recoil/Mypages";
-import { profileImageChange } from "../../api/MypageApi";
+import {
+  nicknameModal,
+  passwordChangepage,
+  profileInfo,
+} from "../../recoil/Mypages";
+import { profileImageChange, myprofileInfo } from "../../api/MypageApi";
 
 const InfoSection = () => {
   const [loggedIn, setLoggedIn] = useRecoilState(isLoggedInState);
   const setNickModal = useSetRecoilState(nicknameModal);
   const navigate = useNavigate();
-  const fileInputRef = useRef(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [myInfo, setMyInfo] = useRecoilState(profileInfo);
+  const setPassChangePage = useSetRecoilState(passwordChangepage);
 
   useEffect(() => {
     if (!loggedIn) {
       navigate("/login");
     }
+    const profileData = async () => {
+      try {
+        const response = await myprofileInfo();
+        setMyInfo(response.data.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    profileData();
   }, []);
+
+  console.log(myInfo);
 
   const handleLogout = async () => {
     try {
@@ -29,12 +46,17 @@ const InfoSection = () => {
     }
   };
 
-  const isOpen = () => {
+  const modalOpen = () => {
     setNickModal(true);
   };
+  const pageOpen = () => {
+    setPassChangePage(true);
+  };
 
-  const handleImageChange = async (event) => {
-    const file = event.target.files[0];
+  const handleImageChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files && event.target.files[0];
     if (file) {
       const formData = new FormData();
       formData.append("imageFile", file);
@@ -61,7 +83,7 @@ const InfoSection = () => {
             />
             <img
               className="w-24 h-24 rounded-[50%] cursor-pointer"
-              src="/img/mysample.jpg"
+              src="/img/profiledefault.svg"
               alt=""
               onClick={() =>
                 fileInputRef.current && fileInputRef.current.click()
@@ -74,11 +96,14 @@ const InfoSection = () => {
               src="/img/modify.svg"
               alt=""
               className="cursor-pointer"
-              onClick={isOpen}
+              onClick={modalOpen}
             />
           </div>
         </div>
-        <div className="px-2 py-1 bg-maincolor text-white text-lg rounded-xl flex items-center justify-center mr-4 cursor-pointer">
+        <div
+          className="px-2 py-1 bg-maincolor text-white text-lg rounded-xl flex items-center justify-center mr-4 cursor-pointer"
+          onClick={pageOpen}
+        >
           비밀번호 변경
         </div>
       </div>

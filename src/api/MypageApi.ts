@@ -36,3 +36,36 @@ export const profileImageChange = async (formData: FormData) => {
     throw error;
   }
 };
+
+//내정보 조회
+export const myprofileInfo = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/user/info`, {
+      withCredentials: true,
+    });
+    return response;
+  } catch (error) {
+    console.error("닉네임변경 에러:", error);
+    throw error;
+  }
+};
+
+//비밀번호 변경
+export const passwordChange = async (
+  currentPassword: string,
+  newPassword: string
+) => {
+  try {
+    const response = await axios.put(
+      `${API_BASE_URL}/user/update/password?oldPassword=${currentPassword}&newPassword=${newPassword}`,
+      {},
+      {
+        withCredentials: true,
+      }
+    );
+    return response;
+  } catch (error) {
+    console.error("비밀번호 변경 에러:", error);
+    throw error;
+  }
+};

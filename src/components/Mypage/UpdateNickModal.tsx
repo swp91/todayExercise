@@ -19,7 +19,6 @@ const UpdateNicknameModal = () => {
   const [lastCheckedNickname, setLastCheckedNickname] = useState("");
 
   useEffect(() => {
-    // 모달 상태에 따른 스크롤 제어
     document.body.style.overflow = Modal ? "hidden" : "unset";
     return () => {
       document.body.style.overflow = "unset";
@@ -37,7 +36,7 @@ const UpdateNicknameModal = () => {
 
     try {
       const nickname = watch("nickname");
-      const result = await nickNameCheck(nickname); // 중복 확인 API 호출
+      const result = await nickNameCheck(nickname);
       console.log(result);
       if (result.data.message === "Success") {
         setIsNicknameAvailable(true);

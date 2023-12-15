@@ -10,8 +10,13 @@ function App() {
   useEffect(() => {
     const checkSession = async () => {
       try {
-        await LoginCheck();
-        setLoggedIn(true);
+        const response = await LoginCheck();
+        console.log(response.data.status);
+        if (response.data.status === 200) {
+          setLoggedIn(true);
+        } else {
+          setLoggedIn(false);
+        }
       } catch (error) {
         setLoggedIn(false);
       }
@@ -19,6 +24,7 @@ function App() {
 
     checkSession();
   }, []);
+
   return <Router />;
 }
 
