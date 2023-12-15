@@ -10,6 +10,7 @@ import {
   profileInfo,
 } from "../../recoil/Mypages";
 import { profileImageChange, myprofileInfo } from "../../api/MypageApi";
+// import { toast } from "react-toastify";
 
 const InfoSection = () => {
   const [loggedIn, setLoggedIn] = useRecoilState(isLoggedInState);

@@ -96,7 +96,11 @@ export const Check = async () => {
 //유저 체크
 export const LoginCheck = async () => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/user/check`);
+    const response = await axios.post(
+      `${API_BASE_URL}/user/check`,
+      {},
+      { withCredentials: true }
+    );
     return response;
   } catch (error) {
     console.error("체크 에러", error);
