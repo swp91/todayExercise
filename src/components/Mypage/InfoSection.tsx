@@ -10,7 +10,7 @@ import {
   profileInfo,
 } from "../../recoil/Mypages";
 import { profileImageChange, myprofileInfo } from "../../api/MypageApi";
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 const InfoSection = () => {
   const [loggedIn, setLoggedIn] = useRecoilState(isLoggedInState);
@@ -29,13 +29,12 @@ const InfoSection = () => {
     }
   };
 
-  console.log(myInfo, "프로필인포");
-
   useEffect(() => {
     if (!loggedIn) {
       navigate("/login");
+    } else {
+      profileData();
     }
-    profileData();
   }, []);
 
   const handleLogout = async () => {
@@ -66,9 +65,16 @@ const InfoSection = () => {
 
       try {
         await profileImageChange(formData);
-        console.log("성공");
+        profileData();
+        toast.success("프로필 이미지 변경완료", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000,
+        });
       } catch (error) {
-        console.log("실패");
+        toast.error("프로필 이미지 전송실패", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000,
+        });
       }
     }
   };
