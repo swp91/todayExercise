@@ -1,5 +1,5 @@
 import React from "react";
-import InputField, { SignUpFormData } from "../components/common/InputField";
+import InputField, { InputFormData } from "../components/common/InputField";
 import { useForm } from "react-hook-form";
 import { signUp, emailCheck } from "../api/UserApi";
 
@@ -9,13 +9,13 @@ const SignUp: React.FC = () => {
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm<SignUpFormData>();
+  } = useForm<InputFormData>();
 
   const username = watch("username");
   // const nickname = watch("nickname");
   const password = watch("password");
 
-  const onSubmit = async (data: SignUpFormData) => {
+  const onSubmit = async (data: InputFormData) => {
     try {
       const response = await signUp(
         data.username,

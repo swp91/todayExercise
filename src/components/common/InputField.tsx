@@ -1,7 +1,7 @@
 import React from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 
-export interface FormData {
+export interface InputFormData {
   username: string;
   nickname: string;
   password: string;
@@ -12,7 +12,7 @@ export interface FormData {
 
 interface InputFieldProps {
   label: string;
-  name: keyof FormData;
+  name: keyof InputFormData;
   register: UseFormRegisterReturn;
   type?: string;
   onCheck?: () => void;
