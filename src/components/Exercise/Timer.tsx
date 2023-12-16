@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
   aerobicListState,
   anaerobicListState,
   exerciseTabState,
+  isTimerOnState,
   modalState,
   timerState,
 } from "../../recoil/Exercise";
@@ -11,10 +12,16 @@ import TimerModal from "./TimerModal";
 import { toast } from "react-toastify";
 import { aerobicRecord, anaerobicRecord } from "../../api/ExerciseApi";
 import { useLoadData } from "../Mypage/UseMyPageHooks";
+import {
+  startTimer,
+  stopTimer,
+  resetTimer,
+  timer as globalTimer,
+} from "./timerModule";
 
 const Timer = () => {
   const [timer, setTimer] = useRecoilState(timerState);
-  const [isTimerOn, setIsTimerOn] = useState(false);
+  const [isTimerOn, setIsTimerOn] = useRecoilState(isTimerOnState);
   const [isModalOpen, setIsModalOpen] = useRecoilState(modalState);
   const [aerobicList, setAerobicList] = useRecoilState(aerobicListState);
   const [anaerobicList, setAnaerobicList] = useRecoilState(anaerobicListState);
@@ -22,50 +29,30 @@ const Timer = () => {
   const loadData = useLoadData();
 
   useEffect(() => {
-    let interval: number | undefined;
-    if (isTimerOn) {
-      interval = window.setInterval(() => {
-        setTimer((prevTimer) => prevTimer + 1);
-      }, 1000);
-    }
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [isTimerOn, timer]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const startTimer = () => {
-    const currentList = activeTab === "aerobic" ? aerobicList : anaerobicList;
-    if (currentList.length === 0) {
-      toast.error("현재 설정한 운동이 없습니다.", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 2000,
-      });
-      return;
-    }
-    setIsTimerOn(true);
-  };
+    setTimer(globalTimer);
+  }, []);
 
   const handleTimerClick = () => {
-    // 모달 창을 열고 타이머를 일시 정지
     if (isTimerOn) {
-      setIsTimerOn(false);
+      stopTimer(setIsTimerOn);
       setIsModalOpen(true);
     } else {
-      // 타이머 시작
-      startTimer();
+      const currentList = activeTab === "aerobic" ? aerobicList : anaerobicList;
+      if (currentList.length === 0) {
+        toast.error("현재 설정한 운동이 없습니다.", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000,
+        });
+        return;
+      }
+      startTimer(setTimer, setIsTimerOn);
     }
-  };
-
-  const handleModalClose = () => {
-    // 모달 창을 닫고 타이머를 재개
-    setIsModalOpen(false);
-    setIsTimerOn(true);
   };
 
   const handleModalConfirm = async () => {
-    let response;
-
+    stopTimer(setIsTimerOn);
     try {
+      let response;
       if (activeTab === "aerobic") {
         response = await aerobicRecord(timer.toString(), aerobicList);
       } else {
@@ -76,15 +63,16 @@ const Timer = () => {
     } catch (error) {
       console.error("운동 전송 실패", error);
     }
-
+    resetTimer();
     setTimer(0);
-    if (activeTab === "aerobic") {
-      setAerobicList([]);
-    } else {
-      setAnaerobicList([]);
-    }
-    setIsTimerOn(false);
+    setAerobicList([]);
+    setAnaerobicList([]);
     setIsModalOpen(false);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    startTimer(setTimer, setIsTimerOn);
   };
 
   const formatTime = () => {

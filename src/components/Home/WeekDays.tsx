@@ -26,7 +26,9 @@ const WeekDays = () => {
       }
     };
 
-    fetchData();
+    if (isLoggedIn) {
+      fetchData();
+    }
   }, []);
 
   for (let i = 0; i < 7; i++) {

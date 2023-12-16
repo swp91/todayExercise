@@ -27,6 +27,12 @@ export const timerState = atom({
   default: 0,
 });
 
+//운동 타이머 온오프
+export const isTimerOnState = atom({
+  key: "isTimerOnState",
+  default: false,
+});
+
 //운동시간 확인 모달
 export const modalState = atom({
   key: "modalState",
