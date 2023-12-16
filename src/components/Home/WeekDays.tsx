@@ -2,7 +2,7 @@ import { isLoggedInState } from "../../recoil/User";
 import { useRecoilState, useRecoilValue } from "recoil";
 import Instructions from "./Instructions";
 import ExerciseRecord from "./ExerciseRecord";
-import { formatDay, isToday, getStartOfWeek } from "./DateUtils";
+import { formatDay, isToday, getStartOfWeek } from "./useHomeHooks";
 import { weekrecordsState } from "../../recoil/ExerciseRecords";
 import { exericiseWeekRecord } from "../../api/ExerciseApi";
 import { useEffect } from "react";

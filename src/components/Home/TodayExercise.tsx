@@ -1,6 +1,6 @@
 import { useRecoilValue } from "recoil";
 import { weekrecordsState } from "../../recoil/ExerciseRecords";
-import { formatDateISO } from "./DateUtils";
+import { formatDateISO } from "./useHomeHooks";
 import TodayRecordbox from "./TodayRecordbox";
 
 const TodayExercise = () => {

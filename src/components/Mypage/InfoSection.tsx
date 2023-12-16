@@ -20,6 +20,7 @@ const InfoSection = () => {
   const [myInfo, setMyInfo] = useRecoilState<UserProfile | null>(profileInfo);
   const setPassChangePage = useSetRecoilState(passwordChangepage);
 
+  console.log(myInfo);
   const profileData = async () => {
     try {
       const response = await myprofileInfo();
@@ -33,7 +34,9 @@ const InfoSection = () => {
     if (!loggedIn) {
       navigate("/login");
     } else {
-      profileData();
+      if (myInfo === null) {
+        profileData();
+      }
     }
   }, []);
 
@@ -64,8 +67,12 @@ const InfoSection = () => {
       formData.append("imageFile", file);
 
       try {
-        await profileImageChange(formData);
-        profileData();
+        const response = await profileImageChange(formData);
+        setMyInfo((prevInfo) => {
+          return prevInfo
+            ? { ...prevInfo, profileImage: response.data.data }
+            : prevInfo;
+        });
         toast.success("프로필 이미지 변경완료", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 2000,

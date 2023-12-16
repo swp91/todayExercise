@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { RecordType } from "../components/Home/DateUtils";
+import { RecordType } from "../components/Home/useHomeHooks";
 
 export const weekrecordsState = atom<RecordType[]>({
   key: "weekrecordsState",

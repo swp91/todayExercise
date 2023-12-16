@@ -1,5 +1,5 @@
 import React from "react";
-import { formatTodayDuration } from "./DateUtils";
+import { formatTodayDuration } from "./useHomeHooks";
 
 interface TodayRecordboxProps {
   record: { cardio: number; strength: number };

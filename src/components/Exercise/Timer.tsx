@@ -10,6 +10,7 @@ import {
 import TimerModal from "./TimerModal";
 import { toast } from "react-toastify";
 import { aerobicRecord, anaerobicRecord } from "../../api/ExerciseApi";
+import { useLoadData } from "../Mypage/UseMyPageHooks";
 
 const Timer = () => {
   const [timer, setTimer] = useRecoilState(timerState);
@@ -18,6 +19,7 @@ const Timer = () => {
   const [aerobicList, setAerobicList] = useRecoilState(aerobicListState);
   const [anaerobicList, setAnaerobicList] = useRecoilState(anaerobicListState);
   const activeTab = useRecoilValue(exerciseTabState);
+  const loadData = useLoadData();
 
   useEffect(() => {
     let interval: number | undefined;
@@ -70,6 +72,7 @@ const Timer = () => {
         response = await anaerobicRecord(timer.toString(), anaerobicList);
       }
       console.log(response);
+      loadData(true);
     } catch (error) {
       console.error("운동 전송 실패", error);
     }

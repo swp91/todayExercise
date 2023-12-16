@@ -1,40 +1,35 @@
 import { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
-import {
-  exerciseAllData,
-  exercisedatacursor,
-  moreExercisedata,
-} from "../../recoil/Exercise";
-import { exericiseallRecord } from "../../api/ExerciseApi";
+import { useRecoilValue } from "recoil";
+import { exerciseAllData, moreExercisedata } from "../../recoil/Exercise";
 import { ExerciseRecord, ProcessedData } from "./MypageType";
+import { useLoadData } from "./UseMyPageHooks";
 
 const ExerciseHistoryList = () => {
-  const [allData, setAllData] =
-    useRecoilState<ExerciseRecord[]>(exerciseAllData);
+  const allData = useRecoilValue<ExerciseRecord[]>(exerciseAllData);
   const [latestDataPerDate, setLatestDataPerDate] = useState<ProcessedData[]>(
     []
   );
-  const [cursor, setCursor] = useRecoilState(exercisedatacursor);
-  const [hasMore, setHasMore] = useRecoilState(moreExercisedata);
+  const hasMore = useRecoilValue(moreExercisedata);
+  const loadData = useLoadData();
 
-  const loadData = async () => {
-    if (!hasMore) return;
+  // const loadData = async () => {
+  //   if (!hasMore) return;
 
-    try {
-      const response = await exericiseallRecord(cursor);
-      const newData = response.data.data;
+  //   try {
+  //     const response = await exericiseallRecord(cursor);
+  //     const newData = response.data.data;
 
-      setAllData((prevData) => [...prevData, ...newData]);
+  //     setAllData((prevData) => [...prevData, ...newData]);
 
-      if (newData.length === 0 || !newData[newData.length - 1].remainingData) {
-        setHasMore(false);
-      } else {
-        setCursor(newData[newData.length - 1].workoutId);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  //     if (newData.length === 0 || !newData[newData.length - 1].remainingData) {
+  //       setHasMore(false);
+  //     } else {
+  //       setCursor(newData[newData.length - 1].workoutId);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   useEffect(() => {
     if (allData.length === 0) {
@@ -107,6 +102,9 @@ const ExerciseHistoryList = () => {
     setLatestDataPerDate(processedData);
   }, [allData]);
 
+  console.log(hasMore, "하모");
+  console.log(allData, "올데");
+
   return (
     <div className="pb-20">
       <div className="mt-8 border-t-4 pt-10 pb-20">
@@ -148,7 +146,7 @@ const ExerciseHistoryList = () => {
       </div>
       {hasMore && (
         <div
-          onClick={loadData}
+          onClick={() => loadData()}
           className="load-more-button flex items-center justify-center"
         >
           <button className="bg-maincolor cursor-pointer text-white text-lg py-1 px-4 rounded-lg">

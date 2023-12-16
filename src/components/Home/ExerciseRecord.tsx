@@ -1,7 +1,7 @@
 import React from "react";
-import { formatDateISO, formatDuration } from "./DateUtils";
-import { groupByDate } from "./DateUtils";
-import { RecordType } from "./DateUtils";
+import { formatDateISO, formatDuration } from "./useHomeHooks";
+import { groupByDate } from "./useHomeHooks";
+import { RecordType } from "./useHomeHooks";
 
 interface ExerciseRecordProps {
   records: RecordType[];

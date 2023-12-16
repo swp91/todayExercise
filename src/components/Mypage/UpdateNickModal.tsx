@@ -5,7 +5,7 @@ import { nicknameModal, profileInfo } from "../../recoil/Mypages";
 import InputField from "../common/InputField";
 import { nickNameCheck } from "../../api/UserApi";
 import { toast } from "react-toastify";
-import { myprofileInfo, nickNameChange } from "../../api/MypageApi";
+import { nickNameChange } from "../../api/MypageApi";
 
 const UpdateNicknameModal = () => {
   const [Modal, setModal] = useRecoilState(nicknameModal);
@@ -18,15 +18,6 @@ const UpdateNicknameModal = () => {
   const [isNicknameChecked, setIsNicknameChecked] = useState(false);
   const [lastCheckedNickname, setLastCheckedNickname] = useState("");
   const setMyInfo = useSetRecoilState(profileInfo);
-
-  const profileData = async () => {
-    try {
-      const response = await myprofileInfo();
-      setMyInfo(response.data.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   useEffect(() => {
     document.body.style.overflow = Modal ? "hidden" : "unset";
@@ -78,12 +69,16 @@ const UpdateNicknameModal = () => {
       try {
         const nickname = watch("nickname");
         const response = await nickNameChange(nickname);
-        console.log(response);
+        console.log(response.data.data);
         toast.success("수정이 완료되었습니다.", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 2000,
         });
-        profileData();
+        setMyInfo((prevInfo) => {
+          return prevInfo
+            ? { ...prevInfo, nickName: response.data.data }
+            : prevInfo;
+        });
         setModal(false);
       } catch (error) {
         console.error(error);
