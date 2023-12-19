@@ -1,6 +1,6 @@
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { logOut } from "../../api/UserApi";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { isLoggedInState } from "../../recoil/User";
 import { useNavigate } from "react-router-dom";
 import {
@@ -9,18 +9,16 @@ import {
   passwordChangepage,
   profileInfo,
 } from "../../recoil/Mypages";
-import { profileImageChange, myprofileInfo } from "../../api/MypageApi";
-import { toast } from "react-toastify";
+import { myprofileInfo } from "../../api/MypageApi";
+import ProfilePicture from "./ProfilePicture";
 
 const InfoSection = () => {
   const [loggedIn, setLoggedIn] = useRecoilState(isLoggedInState);
   const setNickModal = useSetRecoilState(nicknameModal);
   const navigate = useNavigate();
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const [myInfo, setMyInfo] = useRecoilState<UserProfile | null>(profileInfo);
   const setPassChangePage = useSetRecoilState(passwordChangepage);
 
-  console.log(myInfo);
   const profileData = async () => {
     try {
       const response = await myprofileInfo();
@@ -58,58 +56,11 @@ const InfoSection = () => {
     setPassChangePage(true);
   };
 
-  const handleImageChange = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const file = event.target.files && event.target.files[0];
-    if (file) {
-      const formData = new FormData();
-      formData.append("imageFile", file);
-
-      try {
-        const response = await profileImageChange(formData);
-        setMyInfo((prevInfo) => {
-          return prevInfo
-            ? { ...prevInfo, profileImage: response.data.data }
-            : prevInfo;
-        });
-        toast.success("프로필 이미지 변경완료", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 2000,
-        });
-      } catch (error) {
-        toast.error("프로필 이미지 전송실패", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 2000,
-        });
-      }
-    }
-  };
-
   return (
     <div>
       <div className="flex items-center justify-between pt-10 mb-4">
         <div className="flex items-center">
-          <div>
-            <input
-              type="file"
-              style={{ display: "none" }}
-              ref={fileInputRef}
-              onChange={handleImageChange}
-            />
-            <img
-              className="w-24 h-24 rounded-[50%] cursor-pointer"
-              src={
-                myInfo && myInfo.profileImage !== "null"
-                  ? myInfo.profileImage
-                  : "/img/profiledefault.svg"
-              }
-              alt=""
-              onClick={() =>
-                fileInputRef.current && fileInputRef.current.click()
-              }
-            />
-          </div>
+          <ProfilePicture myInfo={myInfo} setMyInfo={setMyInfo} />
           <div className="flex gap-3">
             <div className="ml-5 text-2xl font-bold">{myInfo?.nickName}</div>
             <img

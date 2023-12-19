@@ -8,8 +8,6 @@ const AerobicList = () => {
     setExercisesList(exercisesList.filter((_, idx) => idx !== index));
   };
 
-  console.log(exercisesList);
-
   return (
     <>
       <div className="mx-8 mt-6 h-[450px] overflow-y-scroll hide-scrollbar">

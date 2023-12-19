@@ -69,8 +69,6 @@ const AerobicExercise = () => {
     };
   }, []);
 
-  console.log(exName);
-
   return (
     <div>
       <div className="flex items-center mt-10 ml-7">

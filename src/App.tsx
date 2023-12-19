@@ -11,7 +11,6 @@ function App() {
     const checkSession = async () => {
       try {
         const response = await LoginCheck();
-        console.log(response.data.status);
         if (response.data.status === 200) {
           setLoggedIn(true);
         } else {

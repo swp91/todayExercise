@@ -3,6 +3,8 @@ import { useRecoilValue } from "recoil";
 import { exerciseAllData, moreExercisedata } from "../../recoil/Exercise";
 import { ExerciseRecord, ProcessedData } from "./MypageType";
 import { useLoadData } from "./UseMyPageHooks";
+import { isLoggedInState } from "../../recoil/User";
+import ListItem from "./ListItem";
 
 const ExerciseHistoryList = () => {
   const allData = useRecoilValue<ExerciseRecord[]>(exerciseAllData);
@@ -11,28 +13,10 @@ const ExerciseHistoryList = () => {
   );
   const hasMore = useRecoilValue(moreExercisedata);
   const loadData = useLoadData();
-
-  // const loadData = async () => {
-  //   if (!hasMore) return;
-
-  //   try {
-  //     const response = await exericiseallRecord(cursor);
-  //     const newData = response.data.data;
-
-  //     setAllData((prevData) => [...prevData, ...newData]);
-
-  //     if (newData.length === 0 || !newData[newData.length - 1].remainingData) {
-  //       setHasMore(false);
-  //     } else {
-  //       setCursor(newData[newData.length - 1].workoutId);
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+  const loginCheck = useRecoilValue(isLoggedInState);
 
   useEffect(() => {
-    if (allData.length === 0) {
+    if (allData.length === 0 && loginCheck) {
       loadData();
     }
   }, []);
@@ -102,46 +86,11 @@ const ExerciseHistoryList = () => {
     setLatestDataPerDate(processedData);
   }, [allData]);
 
-  console.log(hasMore, "하모");
-  console.log(allData, "올데");
-
   return (
     <div className="pb-20">
       <div className="mt-8 border-t-4 pt-10 pb-20">
         {latestDataPerDate.map((data) => (
-          <div key={data.date} className="mb-8 z-0">
-            <h3 className="font-bold text-xl mb-3 ">{data.date}</h3>
-            {data.timeGroups.map((group, groupIndex) => (
-              <div
-                key={groupIndex}
-                className="bg-itemgray rounded-xl py-2 px-4 mb-3 flex flex-col relative"
-              >
-                <div className="font-bold absolute top-[40%] right-2">
-                  {group.time}
-                </div>
-                {group.exercises.map((exercise, exerciseIndex) => (
-                  <div key={exerciseIndex}>
-                    {exercise.km != null ? (
-                      <div className="flex mb-1">
-                        <p>{exercise.caExName}</p>
-                        <p className="mx-1">-</p>
-                        <p>{exercise.km}km</p>
-                      </div>
-                    ) : (
-                      <div className="flex mb-1">
-                        <p>{exercise.stExName}</p>
-                        <p className="mx-1">-</p>
-                        <p className="mr-4">{exercise.kg}kg</p>
-                        <p>{exercise.rep}회</p>
-                        <p className="mx-1">*</p>
-                        <p>{exercise.set}세트</p>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            ))}
-          </div>
+          <ListItem data={data} key={data.date} />
         ))}
       </div>
       {hasMore && (

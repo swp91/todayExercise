@@ -8,8 +8,6 @@ const AnaerobicList = () => {
     setExercisesList(exercisesList.filter((_, idx) => idx !== index));
   };
 
-  console.log(exercisesList, "어흥");
-
   return (
     <>
       <div className="mx-8 mt-6 h-[450px] overflow-y-scroll hide-scrollbar">

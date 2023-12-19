@@ -18,8 +18,7 @@ const WeekDays = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await exericiseWeekRecord(); // await 추가
-        console.log(response.data.data);
+        const response = await exericiseWeekRecord();
         setRecords(response.data.data);
       } catch (error) {
         console.error(error);
