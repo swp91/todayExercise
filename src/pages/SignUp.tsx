@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import InputField, { InputFormData } from "../components/common/InputField";
 import { useForm } from "react-hook-form";
-import { signUp, emailCheck } from "../api/UserApi";
+import { signUp, emailCheck, nickNameCheck } from "../api/UserApi";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const SignUp: React.FC = () => {
   const {
@@ -10,31 +12,101 @@ const SignUp: React.FC = () => {
     formState: { errors },
     watch,
   } = useForm<InputFormData>();
+  const navigate = useNavigate();
 
   const username = watch("username");
-  // const nickname = watch("nickname");
+  const nickname = watch("nickname");
   const password = watch("password");
+  const [isEmailChecked, setIsEmailChecked] = useState(false);
+  const [isNicknameChecked, setIsNicknameChecked] = useState(false);
+  useEffect(() => {
+    setIsEmailChecked(false);
+  }, [username]);
+
+  useEffect(() => {
+    setIsNicknameChecked(false);
+  }, [nickname]);
 
   const onSubmit = async (data: InputFormData) => {
+    if (!isEmailChecked || !isNicknameChecked) {
+      toast.error("이메일과 닉네임 중복 검사를 완료해주세요.", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+      return;
+    }
+
     try {
-      const response = await signUp(
-        data.username,
-        data.nickname,
-        data.password
-      );
-      console.log("회원가입 성공:", response);
+      await signUp(data.username, data.nickname, data.password);
+      toast.success("회원가입에 성공하였습니다.", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+      navigate("/login");
     } catch (error) {
-      console.error("회원가입 실패:", error);
+      toast.error("회원가입에 실패하였습니다.", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
     }
   };
 
-  const checkDuplicate = async () => {
-    // 중복 확인 로직
-    try {
-      const response = await emailCheck(username);
-      console.log(response);
-    } catch (error) {
-      console.error("회원가입 ");
+  const checkemailDuplicate = async () => {
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    const trimmedName = username ? username.trim() : "";
+
+    if (emailRegex.test(trimmedName)) {
+      try {
+        const response = await emailCheck(username);
+        if (response.data.status === 200) {
+          toast.success("사용가능한 이메일입니다.", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000,
+          });
+          setIsEmailChecked(true);
+        } else {
+          toast.error("이미 존재하는 이메일입니다.", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000,
+          });
+        }
+      } catch (error) {
+        console.error("이메일 중복 에러");
+      }
+    } else {
+      toast.error("유효한 이메일이 아닙니다.", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+    }
+  };
+  const checknickDuplicate = async () => {
+    const nicknameRegex = /^[가-힣A-Za-z][가-힣A-Za-z]+$/;
+    const trimmedNickname = nickname ? nickname.trim() : "";
+
+    if (nicknameRegex.test(trimmedNickname)) {
+      try {
+        const response = await nickNameCheck(nickname);
+        if (response.data.status === 200) {
+          toast.success("사용가능한 닉네임입니다.", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000,
+          });
+          setIsNicknameChecked(true);
+        } else {
+          toast.error("이미 존재하는 닉네임입니다.", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000,
+          });
+        }
+      } catch (error) {
+        console.error("닉네임 중복 에러");
+      }
+    } else {
+      toast.error("유효한 닉네임이 아닙니다.", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
     }
   };
 
@@ -53,7 +125,7 @@ const SignUp: React.FC = () => {
               message: "유효한 이메일 주소를 입력해주세요.",
             },
           })}
-          onCheck={checkDuplicate}
+          onCheck={checkemailDuplicate}
           className="mb-2"
           placeholder="아이디는 이메일 형식 입니다."
         />
@@ -79,7 +151,7 @@ const SignUp: React.FC = () => {
               message: "한글 또는 영어만 입력 가능합니다.",
             },
           })}
-          onCheck={checkDuplicate}
+          onCheck={checknickDuplicate}
           className="mb-2"
           placeholder="한글 또는 영어로 2글자이상 8글자 이하"
         />
