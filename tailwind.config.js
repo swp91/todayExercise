@@ -9,6 +9,9 @@ export default {
         bggray: "#F5F5F5",
         timered: "#F55454",
       },
+      screens: {
+        mobile: { max: "539px" },
+      },
     },
   },
   plugins: [

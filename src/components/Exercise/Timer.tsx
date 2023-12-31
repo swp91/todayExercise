@@ -10,14 +10,14 @@ import {
 } from "../../recoil/Exercise";
 import TimerModal from "./TimerModal";
 import { toast } from "react-toastify";
-import { aerobicRecord, anaerobicRecord } from "../../api/ExerciseApi";
+import { postRecord } from "../../api/ExerciseApi";
 import { useLoadData } from "../Mypage/UseMyPageHooks";
 import {
   startTimer,
   stopTimer,
   resetTimer,
   timer as globalTimer,
-} from "./timerModule";
+} from "./TimerModule";
 
 const Timer = () => {
   const [timer, setTimer] = useRecoilState(timerState);
@@ -51,18 +51,26 @@ const Timer = () => {
 
   const handleModalConfirm = async () => {
     stopTimer(setIsTimerOn);
+
     try {
-      let response;
       if (activeTab === "aerobic") {
-        response = await aerobicRecord(timer.toString(), aerobicList);
+        const aerobicData = {
+          workTime: timer.toString(),
+          cardioEx: aerobicList,
+        };
+        await postRecord("/workout/cardioEx", aerobicData);
       } else {
-        response = await anaerobicRecord(timer.toString(), anaerobicList);
+        const anaerobicData = {
+          workTime: timer.toString(),
+          strengthEx: anaerobicList,
+        };
+        await postRecord("/workout/strengthEx", anaerobicData);
       }
-      console.log(response);
       loadData(true);
     } catch (error) {
       console.error("운동 전송 실패", error);
     }
+
     resetTimer();
     setTimer(0);
     setAerobicList([]);
