@@ -17,7 +17,7 @@ import {
   stopTimer,
   resetTimer,
   timer as globalTimer,
-} from "./TimerModule";
+} from "./TimeModule";
 
 const Timer = () => {
   const [timer, setTimer] = useRecoilState(timerState);
