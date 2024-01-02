@@ -8,7 +8,7 @@ export function formatDuration(seconds: number): string {
   const minutes = Math.floor((seconds % 3600) / 60);
   const remainingSeconds = seconds % 60;
 
-  return `${hours > 0 ? `${hours}h ` : ""}${minutes > 0 ? `${minutes}m ` : ""}${
+  return `${hours > 0 ? `${hours}h` : ""}${minutes > 0 ? `${minutes}m` : ""}${
     remainingSeconds > 0 ? `${remainingSeconds}s` : ""
   }`;
 }

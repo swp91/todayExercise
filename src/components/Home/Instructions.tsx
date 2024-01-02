@@ -7,7 +7,7 @@ const Instructions = () => {
         to={"/login"}
         className="h-28 w-4/5 bg-maincolor flex items-center justify-center rounded-2xl cursor-pointer"
       >
-        <div className="text-white text-2xl">
+        <div className="text-white text-2xl mobile:text-xl">
           로그인해서 나의 운동기록을 확인해보세요!
         </div>
       </Link>

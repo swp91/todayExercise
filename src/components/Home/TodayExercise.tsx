@@ -22,8 +22,10 @@ const TodayExercise = () => {
   );
 
   return (
-    <div className="flex mt-10 items-center justify-center gap-12">
-      <div className="font-bold text-maincolor text-4xl">TODAY</div>
+    <div className="flex mt-10 items-center justify-center gap-12 mobile:mt-4 mobile:gap-4">
+      <div className="font-bold text-maincolor text-4xl mobile:text-3xl">
+        TODAY
+      </div>
       <TodayRecordbox
         record={todayRecord}
         type="cardio"
