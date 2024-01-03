@@ -51,21 +51,33 @@ const AerobicExercise = () => {
         autoClose: 2000,
       });
     } else {
-      const newExercise: AnaerobicItem = {
-        part,
-        exName,
-        rep,
-        set,
-        kg,
-      };
-      setExercisesList([...exercisesList, newExercise]);
-      setPart("");
-      setExName("");
-      setKg("");
-      setRep("");
-      setSet("");
+      const duplicationCheck = exercisesList.some(
+        (item) => item.exName === exName
+      );
+      if (duplicationCheck) {
+        toast.error("이미 같은 이름의 운동이 있습니다.", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000,
+        });
+      } else {
+        const newExercise: AnaerobicItem = {
+          part,
+          exName,
+          rep,
+          set,
+          kg,
+        };
+        setExercisesList([...exercisesList, newExercise]);
+        setPart("");
+        setExName("");
+        setKg("");
+        setRep("");
+        setSet("");
+      }
     }
   };
+
+  console.log(exercisesList);
 
   const selectExerciseCategory = (category: string) => {
     setPart(category);
