@@ -112,8 +112,10 @@ const SignUp: React.FC = () => {
 
   return (
     <div className="m-auto flex flex-col items-center">
-      <h1 className="text-3xl my-16">회원가입</h1>
-      <form className="w-3/5" onSubmit={handleSubmit(onSubmit)}>
+      <h1 className="text-3xl my-16 mobile:my-3 mobile:text-2xl mobile:mt-5">
+        회원가입
+      </h1>
+      <form className="w-3/5 mobile:w-4/5" onSubmit={handleSubmit(onSubmit)}>
         <InputField
           label="아이디"
           name="username"
@@ -199,7 +201,7 @@ const SignUp: React.FC = () => {
 
         <button
           type="submit"
-          className="mt-20 text-center w-full h-12 rounded-[20px] bg-maincolor text-white text-xl"
+          className="mt-20 text-center w-full h-12 rounded-[20px] bg-maincolor text-white text-xl mobile:mt-10"
         >
           회원가입
         </button>

@@ -56,8 +56,8 @@ const SignIn: React.FC = () => {
 
   return (
     <div className="m-auto flex flex-col items-center">
-      <h1 className="text-3xl mb-16 mt-40">오늘은 어디?</h1>
-      <form className="w-3/5" onSubmit={handleSubmit(onSubmit)}>
+      <h1 className="text-3xl mb-16 mt-40 mobile:mt-12">오늘은 어디?</h1>
+      <form className="w-3/5 mobile:w-4/5" onSubmit={handleSubmit(onSubmit)}>
         <InputField
           label="아이디"
           name="username"

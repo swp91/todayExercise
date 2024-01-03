@@ -33,7 +33,7 @@ const InputField: React.FC<InputFieldProps> = ({
 }) => {
   return (
     <div className="flex flex-col">
-      <label className="ml-2 mb-1 font-bold">{label}</label>
+      <label className="ml-2 mb-1 font-bold mobile:text-sm">{label}</label>
       <div className="flex">
         <input
           {...register}
@@ -47,7 +47,7 @@ const InputField: React.FC<InputFieldProps> = ({
           <button
             type="button"
             onClick={onCheck}
-            className="ml-4 w-28 h-10 rounded-[20px] text-white bg-[#687280]"
+            className="ml-4 w-28 h-10 rounded-[20px] text-white bg-[#687280] mobile:w-20 mobile:text-sm mobile:ml-2"
           >
             중복 확인
           </button>
