@@ -58,29 +58,31 @@ const InfoSection = () => {
 
   return (
     <div>
-      <div className="flex items-center justify-between pt-10 mb-4">
+      <div className="flex items-center justify-between pt-10 mb-4 mobile:pt-4 mobile:mb-2">
         <div className="flex items-center">
           <ProfilePicture myInfo={myInfo} setMyInfo={setMyInfo} />
-          <div className="flex gap-3">
-            <div className="ml-5 text-2xl font-bold">{myInfo?.nickName}</div>
+          <div className="flex gap-3 mobile:gap-1 items-center">
+            <div className="ml-5 text-2xl font-bold mobile:ml-3 mobile:text-lg">
+              {myInfo?.nickName}
+            </div>
             <img
               src="/img/modify.svg"
               alt=""
-              className="cursor-pointer"
+              className="cursor-pointer mobile:w-5 mobile:h-5"
               onClick={modalOpen}
             />
           </div>
         </div>
         <div
-          className="px-2 py-1 bg-maincolor text-white text-lg rounded-xl flex items-center justify-center mr-4 cursor-pointer hover:opacity-80"
+          className="px-2 py-1 bg-maincolor text-white text-lg rounded-xl flex items-center justify-center mr-4 cursor-pointer hover:opacity-80 mobile:px-1 mobile:text-base"
           onClick={pageOpen}
         >
           비밀번호 변경
         </div>
       </div>
-      <div className="flex justify-end ">
+      <div className="flex justify-end">
         <span
-          className="bg-maincolor px-2 py-1 rounded-xl text-white mr-4 cursor-pointer hover:opacity-80"
+          className="bg-maincolor px-2 py-1 rounded-xl text-white mr-4 cursor-pointer hover:opacity-80 mobile:text-sm mobile:px-1.5"
           onClick={handleLogout}
         >
           로그아웃

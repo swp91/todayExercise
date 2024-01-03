@@ -51,12 +51,13 @@ const ProfilePicture: React.FC<ProfilePictureProps> = ({
     <div>
       <input
         type="file"
+        accept="image/*"
         style={{ display: "none" }}
         ref={fileInputRef}
         onChange={handleImageChange}
       />
       <img
-        className="w-24 h-24 rounded-[50%] cursor-pointer"
+        className="w-24 h-24 rounded-[50%] cursor-pointer mobile:w-16 mobile:h-16"
         src={
           myInfo && myInfo.profileImage !== "null"
             ? myInfo.profileImage

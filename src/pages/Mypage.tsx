@@ -9,7 +9,7 @@ const Mypage = () => {
   const nickModalOpen = useRecoilValue(nicknameModal);
   const passwordChangeOpen = useRecoilValue(passwordChangepage);
   return (
-    <div className="mx-10">
+    <div className="mx-10 mobile:mx-4">
       {passwordChangeOpen ? (
         <UpdatePassword />
       ) : (

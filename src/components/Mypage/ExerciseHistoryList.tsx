@@ -88,7 +88,7 @@ const ExerciseHistoryList = () => {
 
   return (
     <div className="pb-20">
-      <div className="mt-8 border-t-4 pt-10 pb-20">
+      <div className="mt-8 border-t-4 pt-10 pb-20 mobile:mt-4 mobile:border-t-3 mobile: pt-2">
         {latestDataPerDate.map((data) => (
           <ListItem data={data} key={data.date} />
         ))}
@@ -98,7 +98,7 @@ const ExerciseHistoryList = () => {
           onClick={() => loadData()}
           className="load-more-button flex items-center justify-center"
         >
-          <button className="bg-maincolor cursor-pointer text-white text-lg py-1 px-4 rounded-lg">
+          <button className="bg-maincolor cursor-pointer text-white text-lg py-1 px-4 rounded-lg mobile:text-base">
             더 보기
           </button>
         </div>

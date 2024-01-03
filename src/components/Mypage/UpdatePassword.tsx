@@ -69,7 +69,7 @@ const UpdatePassword = () => {
       className="flex items-center flex-col "
     >
       <h2 className="text-2xl mt-12 mb-20">비밀번호 변경하기</h2>
-      <div className="flex flex-col w-3/5">
+      <div className="flex flex-col w-3/5 mobile:w-4/5">
         <InputField
           label="기존 비밀번호"
           type="password"

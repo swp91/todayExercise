@@ -123,10 +123,14 @@ const UpdateNicknameModal = () => {
             onCheck={checkDuplicate}
           />
           {!isNicknameAvailable && (
-            <p className="text-red-500">이미 사용 중인 닉네임입니다.</p>
+            <p className="text-red-500 mobile:text-sm">
+              이미 사용 중인 닉네임입니다.
+            </p>
           )}
           {errors.nickname && (
-            <p className="text-red-500">{errors.nickname.message as string}</p>
+            <p className="text-red-500 mobile:text-sm">
+              {errors.nickname.message as string}
+            </p>
           )}
           <div className="mt-4 flex justify-center mt-14 gap-4">
             <div

@@ -61,6 +61,7 @@ const AerobicExercise = () => {
       setExercisesList([...exercisesList, newExercise]);
       setPart("");
       setExName("");
+      setKg("");
       setRep("");
       setSet("");
     }
