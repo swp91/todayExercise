@@ -71,16 +71,16 @@ const AerobicExercise = () => {
 
   return (
     <div>
-      <div className="flex items-center mt-10 ml-7">
+      <div className="flex items-center mt-10 ml-7 mobile:mt-3 mobile:ml-2">
         <div className="relative" ref={dropdownRef}>
           <div
-            className="font-bold cursor-pointer border border-itemgray rounded-3xl py-2 px-5 w-28"
+            className="font-bold cursor-pointer border border-itemgray rounded-3xl py-2 px-5 w-28 mobile:w-24 mobile:text-sm mobile:px-3"
             onClick={() => setDropdownOpen(!dropdownOpen)}
           >
             {exName || "운동종류"}
           </div>
           {dropdownOpen && (
-            <div className="absolute border border-itemgray mt-1 py-2 bg-white rounded-3xl w-28">
+            <div className="absolute border border-itemgray mt-1 py-2 bg-white rounded-3xl w-28 mobile:w-24 mobile:text-sm">
               {aerobicOptions.map((option, index) => (
                 <div
                   key={index}
@@ -96,13 +96,13 @@ const AerobicExercise = () => {
 
         <input
           type="number"
-          className="focus:outline-none hide-number-spinner ml-8 rounded-3xl py-2 px-4 border border-itemgray w-20"
+          className="focus:outline-none hide-number-spinner ml-8 rounded-3xl py-2 px-4 border border-itemgray w-20 mobile:ml-2 mobile:py-1.5"
           value={km}
           onChange={handleAmountChange}
         />
-        <span className="ml-1 text-xl">Km</span>
+        <span className="ml-1 text-xl mobile:text-lg">Km</span>
 
-        <div className="ml-6 cursor-pointer">
+        <div className="ml-6 cursor-pointer mobile:ml-4 mobile:w-7 mobile:h-7">
           <img
             src="/img/addbtn.svg"
             alt="추가버튼"

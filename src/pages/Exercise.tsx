@@ -32,16 +32,16 @@ const Exercise = () => {
 
   return (
     <div>
-      <div className="flex justify-around mx-4">
+      <div className="flex justify-around mx-4 mobile:mx-2">
         <div
           className={`flex-1 flex items-center justify-center border-b-4 h-24 ${
             activeTab === "aerobic" ? "border-maincolor" : "border-itemgray"
-          }`}
+          } mobile:h-20`}
         >
           <span
             className={`text-3xl font-bold  cursor-pointer p-5 ${
               activeTab === "aerobic" ? "text-maincolor" : "text-itemgray"
-            }`}
+            } mobile:text-2xl`}
             onClick={() => changeTab("aerobic")}
           >
             유산소
@@ -50,12 +50,12 @@ const Exercise = () => {
         <div
           className={`flex-1 flex items-center justify-center border-b-4 h-24 ${
             activeTab === "anaerobic" ? "border-maincolor" : "border-itemgray"
-          }`}
+          } mobile:h-20`}
         >
           <span
             className={`text-3xl font-bold  cursor-pointer p-5 ${
               activeTab === "anaerobic" ? "text-maincolor" : "text-itemgray"
-            }`}
+            } mobile:text-2xl`}
             onClick={() => changeTab("anaerobic")}
           >
             무산소

@@ -98,10 +98,10 @@ const Timer = () => {
       <div
         className={`m-auto w-72 h-28 text-white flex items-center justify-center rounded-[40px] mt-8 cursor-pointer ${
           isTimerOn || isModalOpen ? "bg-timered" : "bg-maincolor"
-        }`}
+        } mobile:w-3/5 mobile:h-24 `}
         onClick={handleTimerClick}
       >
-        <p className="text-2xl">
+        <p className="text-2xl mobile:text-xl">
           {isTimerOn || isModalOpen ? formatTime() : "운동시작"}
         </p>
       </div>
