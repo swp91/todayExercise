@@ -84,7 +84,7 @@ const AerobicExercise = () => {
       <div className="flex items-center mt-10 ml-7 mobile:mt-3 mobile:ml-2">
         <div className="relative" ref={dropdownRef}>
           <div
-            className="font-bold cursor-pointer border border-itemgray rounded-3xl py-2 px-5 w-28 mobile:w-24 mobile:text-sm mobile:px-3"
+            className="font-bold cursor-pointer border border-itemgray rounded-3xl py-2 px-5 w-28  mobile:w-24 mobile:text-sm mobile:px-3"
             onClick={() => setDropdownOpen(!dropdownOpen)}
           >
             {exName || "운동종류"}

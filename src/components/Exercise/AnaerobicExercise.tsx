@@ -111,43 +111,22 @@ const AerobicExercise = () => {
 
   return (
     <div>
-      <div className="flex items-center mt-10 ml-7">
-        <div className="relative" ref={dropdownRef}>
-          <div
-            className="font-bold cursor-pointer border border-itemgray rounded-3xl py-2 px-5 w-28"
-            onClick={() => setDropdownOpen(!dropdownOpen)}
-          >
-            {part || "운동파트"}
-          </div>
-          {dropdownOpen && (
-            <div className="absolute border border-itemgray mt-1 py-2 bg-white rounded-3xl w-28">
-              {categoryOptions.map((option, index) => (
-                <div
-                  key={index}
-                  className="py-2 px-5 hover:text-maincolor hover:cursor-pointer"
-                  onClick={() => selectExerciseCategory(option)}
-                >
-                  {option}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-        {part && (
-          <div className="relative ml-4" ref={specificDropdownRef}>
+      <div className="flex mt-10 ml-7 mobile:mt-3 mobile:ml-2 mobile:flex-col">
+        <div className="flex items-center">
+          <div className="relative" ref={dropdownRef}>
             <div
-              className="cursor-pointer border border-itemgray rounded-3xl py-2 px-5 w-50"
-              onClick={() => setSpecificDropdownOpen(!specificDropdownOpen)}
+              className="font-bold cursor-pointer border border-itemgray rounded-3xl py-2 px-5 w-28 mobile:py-1 mobile:px-3 mobile:w-24 mobile:text-sm"
+              onClick={() => setDropdownOpen(!dropdownOpen)}
             >
-              {exName || "운동종류"}
+              {part || "운동파트"}
             </div>
-            {specificDropdownOpen && (
-              <div className="absolute border border-itemgray mt-1 py-2 bg-white rounded-3xl w-50">
-                {anaerobicOptions[part]?.map((option, index) => (
+            {dropdownOpen && (
+              <div className="absolute border border-itemgray mt-1 py-2 bg-white rounded-3xl w-28 mobile:w-24">
+                {categoryOptions.map((option, index) => (
                   <div
                     key={index}
                     className="py-2 px-5 hover:text-maincolor hover:cursor-pointer"
-                    onClick={() => selectSpecificExercise(option)}
+                    onClick={() => selectExerciseCategory(option)}
                   >
                     {option}
                   </div>
@@ -155,35 +134,61 @@ const AerobicExercise = () => {
               </div>
             )}
           </div>
-        )}
-        <input
-          type="number"
-          className="focus:outline-none hide-number-spinner ml-4 rounded-3xl py-2 px-4 border border-itemgray w-16"
-          value={kg}
-          onChange={handleChange(setKg)}
-        />
-        <span className="ml-1 text-xl">kg</span>
-        <input
-          type="number"
-          className="focus:outline-none hide-number-spinner ml-4 rounded-3xl py-2 px-4 border border-itemgray w-16"
-          value={rep}
-          onChange={handleChange(setRep)}
-        />
-        <span className="ml-1 text-xl">회</span>
-        <input
-          type="number"
-          className="focus:outline-none hide-number-spinner ml-4 rounded-3xl py-2 px-4 border border-itemgray w-16"
-          value={set}
-          onChange={handleChange(setSet)}
-        />
-        <span className="ml-1 text-xl">세트</span>
-
-        <div className="ml-2 cursor-pointer">
-          <img
-            src="/img/addbtn.svg"
-            alt="추가버튼"
-            onClick={handleAddExercise}
+          {part && (
+            <div className="relative ml-4" ref={specificDropdownRef}>
+              <div
+                className="cursor-pointer border border-itemgray rounded-3xl py-2 px-5 w-50 mobile:py-1 mobile:px-3"
+                onClick={() => setSpecificDropdownOpen(!specificDropdownOpen)}
+              >
+                {exName || "운동종류"}
+              </div>
+              {specificDropdownOpen && (
+                <div className="absolute border border-itemgray mt-1 py-2 bg-white rounded-3xl w-50">
+                  {anaerobicOptions[part]?.map((option, index) => (
+                    <div
+                      key={index}
+                      className="py-2 px-5 hover:text-maincolor hover:cursor-pointer"
+                      onClick={() => selectSpecificExercise(option)}
+                    >
+                      {option}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+        <div className="flex items-center mobile:mt-3">
+          <input
+            type="number"
+            className="focus:outline-none hide-number-spinner ml-4 rounded-3xl py-2 px-4 border border-itemgray w-16 mobile:ml-0 mobile:py-1"
+            value={kg}
+            onChange={handleChange(setKg)}
           />
+          <span className="ml-1 text-xl mobile:text-base">kg</span>
+          <input
+            type="number"
+            className="focus:outline-none hide-number-spinner ml-4 rounded-3xl py-2 px-4 border border-itemgray w-16 mobile:ml-2 mobile:py-1"
+            value={rep}
+            onChange={handleChange(setRep)}
+          />
+          <span className="ml-1 text-xl mobile:text-base">회</span>
+          <input
+            type="number"
+            className="focus:outline-none hide-number-spinner ml-4 rounded-3xl py-2 px-4 border border-itemgray w-16 mobile:ml-2 mobile:py-1"
+            value={set}
+            onChange={handleChange(setSet)}
+          />
+          <span className="ml-1 text-xl mobile:text-base">세트</span>
+
+          <div className="ml-2 cursor-pointer">
+            <img
+              src="/img/addbtn.svg"
+              className="mobile:w-7 mobile:h-7"
+              alt="추가버튼"
+              onClick={handleAddExercise}
+            />
+          </div>
         </div>
       </div>
       <div>
