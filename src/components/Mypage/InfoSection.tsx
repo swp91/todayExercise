@@ -11,6 +11,12 @@ import {
 } from "../../recoil/Mypages";
 import { myprofileInfo } from "../../api/MypageApi";
 import ProfilePicture from "./ProfilePicture";
+import { weekrecordsState } from "../../recoil/ExerciseRecords";
+import {
+  exerciseAllData,
+  moreExercisedata,
+  exercisedatacursor,
+} from "../../recoil/Exercise";
 
 const InfoSection = () => {
   const [loggedIn, setLoggedIn] = useRecoilState(isLoggedInState);
@@ -18,6 +24,10 @@ const InfoSection = () => {
   const navigate = useNavigate();
   const [myInfo, setMyInfo] = useRecoilState<UserProfile | null>(profileInfo);
   const setPassChangePage = useSetRecoilState(passwordChangepage);
+  const setWeekrecord = useSetRecoilState(weekrecordsState);
+  const setExerciseList = useSetRecoilState(exerciseAllData);
+  const setHasMore = useSetRecoilState(moreExercisedata);
+  const setCursor = useSetRecoilState(exercisedatacursor);
 
   const profileData = async () => {
     try {
@@ -43,6 +53,11 @@ const InfoSection = () => {
       const response = await logOut();
       console.log(response);
       setLoggedIn(false);
+      setWeekrecord([]);
+      setMyInfo(null);
+      setExerciseList([]);
+      setHasMore(true);
+      setCursor(0);
       navigate("/");
     } catch (error) {
       console.error(error);

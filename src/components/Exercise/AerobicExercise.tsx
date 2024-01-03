@@ -35,10 +35,20 @@ const AerobicExercise = () => {
         autoClose: 2000,
       });
     } else {
-      const newExercise: AerobicItem = { exName, km };
-      setExercisesList([...exercisesList, newExercise]);
-      setExName("");
-      setKm("");
+      const duplicationCheck = exercisesList.some(
+        (item) => item.exName === exName
+      );
+      if (duplicationCheck) {
+        toast.error("이미 같은 이름의 운동이 있습니다.", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000,
+        });
+      } else {
+        const newExercise: AerobicItem = { exName, km };
+        setExercisesList([...exercisesList, newExercise]);
+        setExName("");
+        setKm("");
+      }
     }
   };
 
